@@ -1,0 +1,8 @@
+<h2>Usuarios</h2>
+<div *ngIf="users">
+    <div class="card" *ngFor="let user of users">
+        <div class="card-body">
+            {{user.nombre}}
+        </div>
+    </div>
+</div>
