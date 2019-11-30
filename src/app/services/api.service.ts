@@ -9,7 +9,8 @@ import { User } from '../models/user';
 })
 export class ApiService {
 
-  url: string;
+	token;
+  	url: string;
 	public id;
 
 	constructor(public _http: HttpClient){
@@ -34,9 +35,9 @@ export class ApiService {
 		// 	email: user.email,
 		// 	password: user.password
 		//   };
-    //let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    console.log(params);
-		return this._http.post(this.url+'alumno_lista/',params);
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.getToken());
+    	console.log(params);
+		return this._http.post(this.url+'alumno_lista/',params, {headers:headers});
 	}
 
 	updateUser(user: User, id): Observable<any>{
@@ -63,5 +64,16 @@ export class ApiService {
 		console.log(this.id);
 		//let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',token);
 		return this._http.delete(this.url+'user/'+id);
+	}
+
+	getToken(){
+		let token = localStorage.getItem('token');
+		console.log(token);
+		if (token != "undefined") {
+			this.token = token;
+		}else{
+			this.token = null
+		}
+		return this.token;
 	}
 }

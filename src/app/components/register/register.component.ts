@@ -5,7 +5,7 @@ import { HttpClient } from 'selenium-webdriver/http';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-register',
+  selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
 		private apiService: ApiService
 		){
 		this.user = new User("","","","","","","");
-		this.title = 'Identificate';
+
 
 	}
 
@@ -35,7 +35,17 @@ export class RegisterComponent implements OnInit {
 
   
 
-  registerUser(){
+  createUser(){
+	this.apiService.create(this.user).subscribe(
+		response => {
+			console.log(response);
+			
+		},
+		error => {
+			console.log(<any>error);
+		}
+	);
+
 	  
   }
 
