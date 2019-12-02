@@ -15,9 +15,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private apiService: ApiService
-  ) 
-  { 
-    this.user = new User("","","","","","","","");
+  ) {
+    this.user = new User("", "", "", "", "", "", "", "");
   }
 
   ngOnInit() {
@@ -30,7 +29,7 @@ export class UsersComponent implements OnInit {
 
   edit = 'false';
   item
-  editUser(id){
+  editUser(id) {
     this.edit = 'true';
 
     this.item = this.users.find(i => i.id === id);
@@ -44,14 +43,14 @@ export class UsersComponent implements OnInit {
     this.user.erase = 'false';
   }
 
-  editNow(){
+  editNow() {
     this.apiService.updateUser(this.item.id, this.user).subscribe(response => {
       console.log(response);
-     this.ngOnInit();
+      this.ngOnInit();
     })
   }
 
-  deleteUser(id){
+  deleteUser(id) {
     console.log(this.users);
     //this.users.find('id':id);
     let item = this.users.find(i => i.id === id);
@@ -63,11 +62,34 @@ export class UsersComponent implements OnInit {
     this.user.carrera = this.users[index].carrera;
     this.user.sexo = this.users[index].sexo;
     this.user.erase = 'true';
-    this.apiService.deleteUser(item.id,this.user).subscribe(response => {
+    this.apiService.deleteUser(item.id, this.user).subscribe(response => {
       console.log(response);
       this.ngOnInit();
     })
   }
-  
+
+  busqueda;
+  usersAux: User[];
+  buscar() {
+    if (this.busqueda == '') {
+      this.ngOnInit();
+    } else {
+      console.log(this.busqueda);
+      // this.users.filter(function(nombre){return nombre.(this.busqueda);});
+      let nombres = this.users.filter(users => {
+        return users.nombre.includes(this.busqueda);
+      })
+      let carreras = this.users.filter(users => {
+        return users.carrera.includes(this.busqueda);
+      })
+
+      console.log(nombres); // [{name: "Nepal", continent: "Asia"}]
+      console.log(carreras);
+      this.usersAux = this.users;
+      this.users = nombres.concat(carreras);
+    }
+
+  }
+
 
 }
