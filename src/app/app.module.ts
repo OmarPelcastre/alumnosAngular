@@ -9,6 +9,7 @@ import { UsersComponent } from './components/users/users.component';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { EditUserComponent } from './components/edit-user/edit-user.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { LoginComponent } from './components/login/login.component';
     UsersComponent,
     RegisterComponent,
     LoginComponent,
+    EditUserComponent,
 
   ],
   imports: [

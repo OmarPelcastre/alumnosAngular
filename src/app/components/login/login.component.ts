@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 		private _router: Router,
 		private apiService: ApiService
 		){
-		this.user = new User("","","","","","","");
+		this.user = new User("","","","","","","","");
 
 
 	}

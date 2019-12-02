@@ -35,23 +35,20 @@ export class ApiService {
 		// 	email: user.email,
 		// 	password: user.password
 		//   };
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.getToken());
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
     	console.log(params);
 		return this._http.post(this.url+'alumno_lista/',params, {headers:headers});
 	}
 
-	updateUser(user: User, id): Observable<any>{
-		let params = JSON.stringify(user);
-		// let body = {
-		// 	name: user.name,
-		// 	email: user.email,
-		// 	password: user.password
-		//   };
-		return this._http.put(this.url+'alumno_lista/'+id, params);
-	}
-
+	
 	getUsers():Observable<any>{
-		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token f73029006270ff4068271297caf872e2a6c02554');
+
+		this.token = localStorage.getItem('token');
+		console.log(this.token);
+		this.getToken();
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+this.token);
+		console.log(this.token);
+
 		return this._http.get(this.url+'alumno_lista/', {headers:headers});
 	}
 
@@ -60,20 +57,29 @@ export class ApiService {
 		return this._http.get(this.url+'user/'+this.id);
 	}
 
-	deleteUser(id): Observable<any>{
-		console.log(this.id);
-		//let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',token);
-		return this._http.delete(this.url+'user/'+id);
+	updateUser(id, user: User): Observable<any>{
+		let params = JSON.stringify(user);
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
+		return this._http.put(this.url+'alumno_detalles/'+id, params, {headers:headers});
 	}
+
+
+	deleteUser(id, user:User): Observable<any>{
+		
+		let params = JSON.stringify(user);
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
+		return this._http.put(this.url+'alumno_detalles/'+id,params,{headers:headers});
+	}
+*
 
 	getToken(){
 		let token = localStorage.getItem('token');
 		console.log(token);
-		if (token != "undefined") {
-			this.token = token;
-		}else{
-			this.token = null
-		}
+		// if (token != "undefined") {
+		// 	this.token = token;
+		// }else{
+		// 	this.token = null
+		// }
 		return this.token;
 	}
 }

@@ -7,6 +7,7 @@ export class User{
 		public sexo: string,
 		public direccion: string,
 		public carrera: string,
+		public erase: string
 	){}
-
+		
 }
