@@ -17,9 +17,6 @@ export class ApiService {
 		this.url = "http://127.0.0.1:8000/api/v1/"; 
 	}
 
-	setId(id){
-		this.id = id;
-	}
 
 	login(user): Observable<any>{
 		
@@ -69,6 +66,11 @@ export class ApiService {
 		let params = JSON.stringify(user);
 		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
 		return this._http.put(this.url+'alumno_detalles/'+id,params,{headers:headers});
+	}
+
+	getCarreras(): Observable<any>{
+		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
+		return this._http.get(this.url+'carrera_lista/', {headers:headers});
 	}
 *
 

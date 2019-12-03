@@ -28,35 +28,39 @@
     <form #editForm="ngForm" (ngSubmit)="editNow()" class="col-lg-12">
         <p>
             <label>Nombre</label>
-            <input type="text" name="name" placeholder="" #name="ngModel" [(ngModel)]="user.nombre" class="form-control"
+            <input type="text" name="nombre" placeholder="" #nombre="ngModel" [(ngModel)]="user.nombre" class="form-control"
                 required>
         </p>
 
         <p>
             <label>Apellidos</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="user.apellidos" class="form-control" required>
+            <input type="text" name="apellido" #apellido="ngModel" [(ngModel)]="user.apellidos" class="form-control" required>
         </p>
 
         <p>
             <label>edad</label>
-            <input type="text" name="lastName" #lastName="ngModel" [(ngModel)]="user.edad" class="form-control"
+            <input type="text" name="edad" #edad="ngModel" [(ngModel)]="user.edad" class="form-control"
                 required>
         </p>
         <p>
             <label>sexo</label>
-            <input type="text" name="lastName" #lastName="ngModel" [(ngModel)]="user.sexo" class="form-control"
+            <input type="text" name="sexo" #sexo="ngModel" [(ngModel)]="user.sexo" class="form-control"
                 required>
         </p>
         <p>
             <label>dirección</label>
-            <input type="text" name="lastName" #lastName="ngModel" [(ngModel)]="user.direccion" class="form-control"
+            <input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="user.direccion" class="form-control"
                 required>
         </p>
-        <p>
-            <label>carrera</label>
-            <input type="text" name="lastName" #lastName="ngModel" [(ngModel)]="user.carrera" class="form-control"
-                required>
-        </p>
+        <div class="btn-group">
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+                Carreras
+            </button>
+            <div class="dropdown-menu" *ngIf="carreras">
+                <p class="dropdown-item" *ngFor="let carrera of carreras" (click)="setCarrera(carrera.id)">{{carrera.nombre_carrera}}</p>
+            </div>
+        </div>
 
         <input type="submit" value="Editar" class="btn btn-success">
     </form>

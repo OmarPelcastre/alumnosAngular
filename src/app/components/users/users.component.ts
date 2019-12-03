@@ -12,6 +12,7 @@ export class UsersComponent implements OnInit {
 
   users: User[];
   user: User;
+  carreras:any[];
 
   constructor(
     private apiService: ApiService
@@ -24,7 +25,34 @@ export class UsersComponent implements OnInit {
       console.log(response);
       this.users = response;
       this.edit = 'false';
+      this.getCarreras();
     })
+    
+    
+  }
+
+  async renameCarreras(){
+    await console.log(this.carreras);
+    console.log(this.users);
+    this.users.forEach(async user => {
+      console.log(parseInt(user.carrera));
+      let index = this.carreras.findIndex(i => i.id === user.carrera);
+      user.carrera = await this.carreras[index].nombre_carrera;
+    })
+  }
+
+  getCarreras(){
+    this.apiService.getCarreras().subscribe(async response => {
+		  
+      this.carreras = await response;
+      console.log(response);
+      this.renameCarreras();
+    })
+    
+  }
+
+  setCarrera(id){
+    this.user.carrera = id;
   }
 
   edit = 'false';
@@ -59,7 +87,7 @@ export class UsersComponent implements OnInit {
     this.user.apellidos = this.users[index].apellidos;
     this.user.edad = this.users[index].edad;
     this.user.direccion = this.users[index].direccion;
-    this.user.carrera = this.users[index].carrera;
+    this.user.carrera = '2';
     this.user.sexo = this.users[index].sexo;
     this.user.erase = 'true';
     this.apiService.deleteUser(item.id, this.user).subscribe(response => {
@@ -68,25 +96,30 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  busqueda;
+  busqueda: string;
   usersAux: User[];
   buscar() {
     if (this.busqueda == '') {
       this.ngOnInit();
     } else {
       console.log(this.busqueda);
-      // this.users.filter(function(nombre){return nombre.(this.busqueda);});
       let nombres = this.users.filter(users => {
         return users.nombre.includes(this.busqueda);
       })
+      
+      let edades = this.users.filter(users => {
+        return users.edad.includes(this.busqueda);
+      })
+
       let carreras = this.users.filter(users => {
         return users.carrera.includes(this.busqueda);
       })
 
+
       console.log(nombres); // [{name: "Nepal", continent: "Asia"}]
-      console.log(carreras);
+
       this.usersAux = this.users;
-      this.users = nombres.concat(carreras);
+      this.users = nombres.concat(edades).concat(carreras);
     }
 
   }

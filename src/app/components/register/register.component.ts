@@ -17,6 +17,7 @@ export class RegisterComponent implements OnInit {
 	public identity;
 	public token;
 	public _http: HttpClient;
+	public carreras;
 
 
 
@@ -31,10 +32,40 @@ export class RegisterComponent implements OnInit {
 	}
 
   ngOnInit() {
+	  this.apiService.getCarreras().subscribe(response => {
+		  console.log(response);
+		  this.carreras = response;
+	  })
+	//   this.carreras = [
+	// 	{
+	// 		"nombre": "Ingeniería ambiental",
+			
+	// 	},
+	// 	{
+			
+	// 		"nombre": "Ingeniería en desarrollo de Software",
+			
+	// 	},
+	// 	{
+			
+	// 		"nombre": "Ingeniería Biomedica",
+			
+	// 	},
+	// 	{
+			
+	// 		"nombre": "Ingeniería Agroindustrial",
+			
+	// 	},
+	// ]
+	  console.log(this.carreras);
   }
 
   
 
+  setCarrera(carrera){
+	  console.log(carrera);
+	  this.user.carrera = carrera;
+  }
   createUser(){
 	this.apiService.create(this.user).subscribe(
 		response => {
@@ -44,9 +75,7 @@ export class RegisterComponent implements OnInit {
 		error => {
 			console.log(<any>error);
 		}
-	);
-
-	  
+	); 
   }
 
 		
