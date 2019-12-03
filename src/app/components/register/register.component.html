@@ -1,13 +1,11 @@
 <div class="col-lg-5">
+    <div class="alert alert-danger" role="alert" *ngIf="status == 'error'">
+        Rellene todos los campos
+    </div>
 
-    <!-- <h1 class="h1-strong">{{title}}</h1>
-	<div class="alert alert-success" *ngIf="status == 'success'">
-		Registro Completado Correctamente <a [routerLink] = "['/login']"> identificate aquí </a>
-	</div>
-
-	<div class="alert alert-danger" *ngIf="status == 'error'">
-		El registro no ha podido completarse, intentalo de nuevo
-    </div> -->
+    <div class="alert alert-success" role="alert" *ngIf="status == 'success'">
+            Usuario agregado correctamente, Por favor recargue la pagina para reflejar los cambios
+        </div>
 
     <h2>Crear Alumno</h2>
 
@@ -44,24 +42,12 @@
                 Carreras
             </button>
             <div class="dropdown-menu" *ngIf="carreras">
-                <p class="dropdown-item" *ngFor="let carrera of carreras" (click)="setCarrera(carrera.id)">{{carrera.nombre_carrera}}</p>
+                <p class="dropdown-item" *ngFor="let carrera of carreras" (click)="setCarrera(carrera.id)">
+                    {{carrera.nombre_carrera}}</p>
             </div>
         </div>
-        <!-- <label>carrera</label>
-            <div class="btn-group">
-                <button type="button" class="btn btn-info dropdown-toggle" #lastName="ngModel" [(ngModel)]="user.carrera"  data-toggle="dropdown" aria-haspopup="true"
-                    aria-expanded="false">
-                    Action
-                </button>
-                <div class="dropdown-menu">
-                    <p class="dropdown-item" *ngIf="let carrera of carreras">{{carrera}}</p>
-
-                </div>
-            </div> -->
-        <!-- <input type="text" name="lastName" #lastName="ngModel" [(ngModel)]="user.carrera" class="form-control"
-                required> -->
-
-
+        <br>
+        <br>
         <input type="submit" value="Agregar" class="btn btn-success">
     </form>
 

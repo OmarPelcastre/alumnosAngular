@@ -5,51 +5,49 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 
 
 	public user: User;
-	public status:string;
+	public status: string;
 	public identity;
 	public token;
-  public _http: HttpClient;
-  input;
+	public _http: HttpClient;
+	input;
 
-  constructor(
+	constructor(
 		private _route: ActivatedRoute,
 		private _router: Router,
 		private apiService: ApiService
-		){
-		this.user = new User("","","","","","","","");
+	) {
+		this.user = new User("", "", "", "", "", "", "", "");
 
 
 	}
 
-  ngOnInit() {
-    this.input = {
-      username: '',
-      password: ''
-    };
-  }
+	ngOnInit() {
+		this.input = {
+			username: '',
+			password: ''
+		};
+	}
 
-  login(){
-		// logear al usuario y conseguir sus datos
+	login() {
 		this.apiService.login(this.input).subscribe(
 			response => {
-        console.log(response);
-				
-          if(response.key){
-          
-          // conseguir token
-          this.token = response.key;
-          localStorage.setItem('token',this.token);
-          this._router.navigate(['/home']);
+				console.log(response);
+
+				if (response.key) {
+
+					this.token = response.key;
+					localStorage.setItem('token', this.token);
+					this._router.navigate(['/home']);
 				}
-				
+
 			},
 			error => {
 				var errorMessage = <any>error;

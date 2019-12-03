@@ -12,7 +12,8 @@ export class UsersComponent implements OnInit {
 
   users: User[];
   user: User;
-  carreras:any[];
+  carreras: any[];
+  status;
 
   constructor(
     private apiService: ApiService
@@ -26,12 +27,13 @@ export class UsersComponent implements OnInit {
       this.users = response;
       this.edit = 'false';
       this.getCarreras();
+      this.status = '';
     })
-    
-    
+
+
   }
 
-  async renameCarreras(){
+  async renameCarreras() {
     await console.log(this.carreras);
     console.log(this.users);
     this.users.forEach(async user => {
@@ -41,17 +43,17 @@ export class UsersComponent implements OnInit {
     })
   }
 
-  getCarreras(){
+  getCarreras() {
     this.apiService.getCarreras().subscribe(async response => {
-		  
+
       this.carreras = await response;
       console.log(response);
       this.renameCarreras();
     })
-    
+
   }
 
-  setCarrera(id){
+  setCarrera(id) {
     this.user.carrera = id;
   }
 
@@ -59,37 +61,29 @@ export class UsersComponent implements OnInit {
   item
   editUser(id) {
     this.edit = 'true';
-
     this.item = this.users.find(i => i.id === id);
     let index = this.users.findIndex(i => i.id === id);
-    this.user.nombre = this.users[index].nombre;
-    this.user.apellidos = this.users[index].apellidos;
-    this.user.edad = this.users[index].edad;
-    this.user.direccion = this.users[index].direccion;
-    this.user.carrera = this.users[index].carrera;
-    this.user.sexo = this.users[index].sexo;
-    this.user.erase = 'false';
+    this.user = this.users[index];
   }
 
   editNow() {
     this.apiService.updateUser(this.item.id, this.user).subscribe(response => {
       console.log(response);
       this.ngOnInit();
+    },
+    error => {
+      this.status = 'error';
     })
   }
 
   deleteUser(id) {
-    console.log(this.users);
-    //this.users.find('id':id);
+
     let item = this.users.find(i => i.id === id);
     let index = this.users.findIndex(i => i.id === id);
-    this.user.nombre = this.users[index].nombre;
-    this.user.apellidos = this.users[index].apellidos;
-    this.user.edad = this.users[index].edad;
-    this.user.direccion = this.users[index].direccion;
+    this.user = this.users[index];
     this.user.carrera = '2';
-    this.user.sexo = this.users[index].sexo;
     this.user.erase = 'true';
+
     this.apiService.deleteUser(item.id, this.user).subscribe(response => {
       console.log(response);
       this.ngOnInit();
@@ -103,23 +97,30 @@ export class UsersComponent implements OnInit {
       this.ngOnInit();
     } else {
       console.log(this.busqueda);
-      let nombres = this.users.filter(users => {
-        return users.nombre.includes(this.busqueda);
+      let nombresMin = this.users.filter(users => {
+        return users.nombre.toLowerCase().includes(this.busqueda);
       })
-      
-      let edades = this.users.filter(users => {
-        return users.edad.includes(this.busqueda);
-      })
-
-      let carreras = this.users.filter(users => {
-        return users.carrera.includes(this.busqueda);
+      let nombresMay = this.users.filter(users => {
+        return users.nombre.toUpperCase().includes(this.busqueda);
       })
 
+      let edadesMin = this.users.filter(users => {
+        return users.edad.toLowerCase().includes(this.busqueda);
+      })
+      let edadesMay = this.users.filter(users => {
+        return users.edad.toUpperCase().includes(this.busqueda);
+      })
 
-      console.log(nombres); // [{name: "Nepal", continent: "Asia"}]
+      let carrerasMin = this.users.filter(users => {
+        return users.carrera.toLowerCase().includes(this.busqueda);
+      })
+      let carrerasMay = this.users.filter(users => {
+        return users.carrera.toUpperCase().includes(this.busqueda);
+      })
 
       this.usersAux = this.users;
-      this.users = nombres.concat(edades).concat(carreras);
+      this.users = nombresMin.concat(edadesMin).concat(carrerasMin)
+      .concat(nombresMay).concat(carrerasMay).concat(edadesMay);
     }
 
   }

@@ -5,83 +5,71 @@ import { User } from '../models/user';
 
 
 @Injectable({
-  providedIn: 'root'
+	providedIn: 'root'
 })
 export class ApiService {
 
 	token;
-  	url: string;
+	baseUrl: string;
 	public id;
 
-	constructor(public _http: HttpClient){
-		this.url = "http://127.0.0.1:8000/api/v1/"; 
+	constructor(public _http: HttpClient) {
+		this.baseUrl = "http://ec2-54-167-7-4.compute-1.amazonaws.com/api/v1/";
 	}
 
 
-	login(user): Observable<any>{
-		
-		//let params = JSON.stringify(user);
-		let headers = new HttpHeaders().set('Content-Type','application/json');
-		return this._http.post(this.url+'rest-auth/login/' , user, {headers: headers});
+	login(user): Observable<any> {
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+		return this._http.post(this.baseUrl + 'rest-auth/login/', user, { headers: headers });
 	}
 
-	create(user: User): Observable<any>{
+	create(user: User): Observable<any> {
 		let params = JSON.stringify(user);
-		// let body = {
-		// 	name: user.name,
-		// 	email: user.email,
-		// 	password: user.password
-		//   };
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
-    	console.log(params);
-		return this._http.post(this.url+'alumno_lista/',params, {headers:headers});
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
+		console.log(params);
+		return this._http.post(this.baseUrl + 'alumnos/', params, { headers: headers });
 	}
 
-	
-	getUsers():Observable<any>{
 
+	getUsers(): Observable<any> {
 		this.token = localStorage.getItem('token');
-		console.log(this.token);
 		this.getToken();
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+this.token);
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
 		console.log(this.token);
 
-		return this._http.get(this.url+'alumno_lista/', {headers:headers});
+		return this._http.get(this.baseUrl + 'alumnos/', { headers: headers });
 	}
 
-	getUser(id):Observable<any>{
+	getUser(id): Observable<any> {
 		//let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.getToken());
-		return this._http.get(this.url+'user/'+this.id);
+		return this._http.get(this.baseUrl + 'user/' + this.id);
 	}
 
-	updateUser(id, user: User): Observable<any>{
+	updateUser(id, user: User): Observable<any> {
 		let params = JSON.stringify(user);
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
-		return this._http.put(this.url+'alumno_detalles/'+id, params, {headers:headers});
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
+		return this._http.put(this.baseUrl + 'alumno/' + id, params, { headers: headers });
 	}
 
 
-	deleteUser(id, user:User): Observable<any>{
-		
+	deleteUser(id, user: User): Observable<any> {
 		let params = JSON.stringify(user);
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
-		return this._http.put(this.url+'alumno_detalles/'+id,params,{headers:headers});
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
+		return this._http.put(this.baseUrl + 'alumno/' + id, params, { headers: headers });
 	}
 
-	getCarreras(): Observable<any>{
-		let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization','Token '+ this.token);
-		return this._http.get(this.url+'carrera_lista/', {headers:headers});
+	getCarreras(): Observable<any> {
+		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
+		return this._http.get(this.baseUrl + 'carreras/', { headers: headers });
 	}
-*
 
-	getToken(){
+
+	getToken() {
 		let token = localStorage.getItem('token');
-		console.log(token);
-		// if (token != "undefined") {
-		// 	this.token = token;
-		// }else{
-		// 	this.token = null
-		// }
+		if (token != "undefined")
+			this.token = token;
+		else
+			this.token = null
 		return this.token;
 	}
 }
