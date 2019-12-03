@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json ",
+    "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,7 +20,6 @@
     "@angular/platform-browser-dynamic": "~8.2.9",
     "@angular/router": "~8.2.9",
     "bootstrap": "^4.4.0",
-    "bootstrap-icons": "^1.0.0-alpha",
     "jquery": "^3.4.1",
     "popper.js": "^1.16.0",
     "rxjs": "~6.4.0",
