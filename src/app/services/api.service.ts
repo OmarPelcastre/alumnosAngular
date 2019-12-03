@@ -19,7 +19,7 @@ export class ApiService {
 
 
 	login(user): Observable<any> {
-		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Access-Control-Allow-Origin','*');
+		let headers = new HttpHeaders().set('Content-Type', 'application/json');
 		return this._http.post(this.baseUrl + 'rest-auth/login/', user, { headers: headers });
 	}
 
