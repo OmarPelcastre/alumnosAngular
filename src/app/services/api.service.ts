@@ -14,7 +14,7 @@ export class ApiService {
 	public id;
 
 	constructor(public _http: HttpClient) {
-		this.baseUrl = "http://ec2-54-167-7-4.compute-1.amazonaws.com/api/v1/";
+		this.baseUrl = "ec2-100-24-21-164.compute-1.amazonaws.com/api/v1/";
 	}
 
 
