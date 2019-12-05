@@ -2,7 +2,7 @@
 <form #searchForm="ngForm" class="form-inline" (ngSubmit)="buscar()">
     <div class="form-group">
         <input type="text" class="form-control" id="inputPassword2" #name="ngModel" [(ngModel)]="busqueda"
-            [ngModelOptions]="{standalone: true}" class="form-control" required placeholder="Nombre / Carrera / Edad">
+            [ngModelOptions]="{standalone: true}" class="form-control" required placeholder="Nombre/Edad/Carrera">
     </div>
     <button type="submit" class="btn btn-primary mb-2">Buscar</button>
 </form>

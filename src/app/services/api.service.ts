@@ -10,24 +10,25 @@ import { User } from '../models/user';
 export class ApiService {
 
 	token;
-	baseUrl: string;
+	url: string;
 	public id;
 
 	constructor(public _http: HttpClient) {
-		this.baseUrl = "ec2-100-24-21-164.compute-1.amazonaws.com/api/v1/";
+		this.url = "http://ec2-100-24-21-164.compute-1.amazonaws.com/api/v1/";
 	}
 
 
 	login(user): Observable<any> {
 		let headers = new HttpHeaders().set('Content-Type', 'application/json');
-		return this._http.post(this.baseUrl + 'rest-auth/login/', user, { headers: headers });
+		console.log(this.url);
+		return this._http.post(this.url + 'rest-auth/login/', user, { headers: headers });
 	}
 
 	create(user: User): Observable<any> {
 		let params = JSON.stringify(user);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
 		console.log(params);
-		return this._http.post(this.baseUrl + 'alumnos/', params, { headers: headers });
+		return this._http.post(this.url + 'alumnos/', params, { headers: headers });
 	}
 
 
@@ -37,30 +38,30 @@ export class ApiService {
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
 		console.log(this.token);
 
-		return this._http.get(this.baseUrl + 'alumnos/', { headers: headers });
+		return this._http.get(this.url + 'alumnos/', { headers: headers });
 	}
 
 	getUser(id): Observable<any> {
 		//let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.getToken());
-		return this._http.get(this.baseUrl + 'user/' + this.id);
+		return this._http.get(this.url + 'user/' + this.id);
 	}
 
 	updateUser(id, user: User): Observable<any> {
 		let params = JSON.stringify(user);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
-		return this._http.put(this.baseUrl + 'alumno/' + id, params, { headers: headers });
+		return this._http.put(this.url + 'alumno/' + id, params, { headers: headers });
 	}
 
 
 	deleteUser(id, user: User): Observable<any> {
 		let params = JSON.stringify(user);
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
-		return this._http.put(this.baseUrl + 'alumno/' + id, params, { headers: headers });
+		return this._http.put(this.url + 'alumno/' + id, params, { headers: headers });
 	}
 
 	getCarreras(): Observable<any> {
 		let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', 'Token ' + this.token);
-		return this._http.get(this.baseUrl + 'carreras/', { headers: headers });
+		return this._http.get(this.url + 'carreras/', { headers: headers });
 	}
 
 
